@@ -12,6 +12,7 @@ public class User {
     private String username;
     private String password;
     private boolean active;
+    private String token;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -63,5 +64,9 @@ public class User {
                 ", username='" + username +
                 ", password='" +password + '\'' +
                 '}';
+    }
+
+    public void setToken(String token) {
+        this.token="Bearer_"+token;
     }
 }

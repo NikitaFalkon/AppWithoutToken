@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Password</th>
+    </tr>
+    <div th:each="user:${users}">
+        <tr>
+            <td><p th:text="${user.getUsername()}"></p> </td>
+            <td><p th:text="${user.getPassword()}"></p> </td>
+        </tr>
+    </div>
+</table>
+</body>
+</html>
