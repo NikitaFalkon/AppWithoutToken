@@ -9,11 +9,11 @@
 <div th:if="${param.error}">
     Invalid username and password.
 </div>
-<form th:action="@{/loging}" method="get" th:object="${user}">
-    <label>Username: <input type="text" th:field="*{username}" name="username"></label>
+<form action="/loging" method="get">
+    <label>Username: <input type="text"  name="username"></label>
     <br/>
-    <label>Pssword: <input type="text" th:field="*{password}" name="password"></label>
-    <div><input type="submit" value="Sign In"/></div>
+    <label>Pssword: <input type="text"  name="password"></label>
+    <div><input type="submit" value="Sign In"></div>
 </form>
 </body>
 </html>

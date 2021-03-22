@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -26,9 +27,10 @@ public class RController {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
     @GetMapping("/user")
-    public String User(@RequestParam(value = "username") String name, @RequestParam(value = "password") String password)
+    public String User(@RequestParam(value = "username") String name)
     {
-        User user = userService.login(name, password);
+        User user = userService.login(name);
+        System.out.println("i");
         return user.toString();
     }
     @PostMapping(value = "/new", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -38,7 +40,8 @@ public class RController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
     @GetMapping("/loging")
-    public ResponseEntity login(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password) {
+    public RedirectView login(@RequestParam(value = "username") String username,
+                              @RequestParam(value = "password") String password) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         User user = userService.loadUserByUsername(username);
 
@@ -48,10 +51,13 @@ public class RController {
 
         String token = jwtTokenProvider.createToken(username, user.getRoles());
 
-        Map<Object, Object> response = new HashMap<>();
+        /*Map<Object, Object> response = new HashMap<>();
         response.put("username", username);
         response.put("token", token);
-        userService.CreateToken(token, user);
-        return ResponseEntity.ok(response);
+        userService.CreateToken(token, user);*/
+        RedirectView redirectView = new RedirectView();
+        redirectView.setUrl("/users");
+        return redirectView;
+        //return ResponseEntity.ok(response);
     }
 }
